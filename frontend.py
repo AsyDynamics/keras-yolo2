@@ -340,9 +340,14 @@ class YOLO(object):
         # Compute mAP on the validation set
         ############################################
         average_precisions = self.evaluate(valid_generator)
-        print('average_precisions type:',type(average_precisions),'size',size(average_precisions))
-        for key in range (0,size(history.history.keys()):
-            print('the evaluation is ',average_precisions[i])
+        loss = history.history['loss']
+        acc  = history.history['acc']
+        val_loss = history.history['val_loss']
+        val_acc  = history.history['val_acc']
+        print('loss is:',loss)
+        print('acc is:',acc)
+        print('val_loss is',val_loss)
+        print('val_acc is',val_acc)
         # print evaluation
         for label, average_precision in average_precisions.items():
             print(self.labels[label], '{:.4f}'.format(average_precision))
