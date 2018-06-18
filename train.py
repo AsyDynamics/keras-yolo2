@@ -6,6 +6,7 @@ import numpy as np
 from preprocessing import parse_annotation
 from frontend import YOLO
 import json
+import time
 
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"]="0"
@@ -80,7 +81,7 @@ def _main_(args):
     ###############################
     #   Start the training process 
     ###############################
-
+    print('Start straining at: ', time.strftime("%H:%M:%S"))
     yolo.train(train_imgs         = train_imgs,
                valid_imgs         = valid_imgs,
                train_times        = config['train']['train_times'],
@@ -95,6 +96,7 @@ def _main_(args):
                class_scale        = config['train']['class_scale'],
                saved_weights_name = config['train']['saved_weights_name'],
                debug              = config['train']['debug'])
+    print('Finish straining at: ', time.strftime("%H:%M:%S"))
 
 if __name__ == '__main__':
     args = argparser.parse_args()

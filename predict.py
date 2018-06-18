@@ -33,7 +33,6 @@ argparser.add_argument(
     help='path to an image or an video (mp4 format)')
 
 def _main_(args):
-    print('The beginning time is: ', time.strftime("%Y-%m-%d %H:%M:%S"))
     config_path  = args.conf
     weights_path = args.weights
     image_path   = args.input
@@ -44,23 +43,23 @@ def _main_(args):
     ###############################
     #   Make the model 
     ###############################
-    print('Start making model at: ',time.strftime("%H:%M:%S"))
+    start = time.time()
     yolo = YOLO(backend             = config['model']['backend'],
                 input_size          = config['model']['input_size'], 
                 labels              = config['model']['labels'], 
                 max_box_per_image   = config['model']['max_box_per_image'],
                 anchors             = config['model']['anchors'])
-    print('Finish making model at: ',time.strftime("%H:%M:%S"))
+    print('Finish making model, using time: ',round(time.time()-start,3))
     ###############################
     #   Load trained weights
     ###############################    
-    print('Start loading pretrained model at: ', time.strftime("%Y-%m-%d %H:%M:%S"))
+    start = time.time()
     yolo.load_weights(weights_path)
-    print('Finish loading pretrained model at: ',time.strftime("%H:%M:%S"))
+    print('Finish loading weights, using time: ',round(time.time()-start,3))
     ###############################
     #   Predict bounding boxes 
     ###############################
-
+    start = time.time()
     if image_path[-4:] == '.mp4':
         video_out = image_path[:-4] + '_detected' + image_path[-4:]
         video_reader = cv2.VideoCapture(image_path)
@@ -88,7 +87,7 @@ def _main_(args):
         image = cv2.imread(image_path)
         boxes = yolo.predict(image)
         image = draw_boxes(image, boxes, config['model']['labels'])
-
+        print('Finish predicting, using time: ',round(time.time()-start,3))
         print(len(boxes), 'boxes are found')
 
         cv2.imwrite(image_path[:-4] + '_detected' + image_path[-4:], image)
