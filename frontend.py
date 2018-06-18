@@ -325,7 +325,7 @@ class YOLO(object):
         # Start the training process
         ############################################        
 
-        self.model.fit_generator(generator        = train_generator, 
+        history = self.model.fit_generator(generator        = train_generator, 
                                  steps_per_epoch  = len(train_generator) * train_times, 
                                  epochs           = warmup_epochs + nb_epochs, 
                                  verbose          = 2 if debug else 1,
@@ -335,6 +335,7 @@ class YOLO(object):
                                  workers          = 3,
                                  max_queue_size   = 8)      
 
+        print('History includes ',history.history.keys())
         ############################################
         # Compute mAP on the validation set
         ############################################
