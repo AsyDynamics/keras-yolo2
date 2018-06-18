@@ -9,6 +9,7 @@ from preprocessing import parse_annotation
 from utils import draw_boxes
 from frontend import YOLO
 import json
+import time
 
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"]="0"
@@ -32,6 +33,7 @@ argparser.add_argument(
     help='path to an image or an video (mp4 format)')
 
 def _main_(args):
+    print('The beginning time is: ', time.strftime("%Y-%m-%d %H:%M:%S"))
     config_path  = args.conf
     weights_path = args.weights
     image_path   = args.input
@@ -42,19 +44,19 @@ def _main_(args):
     ###############################
     #   Make the model 
     ###############################
-
+    print('Start making model at: ',time.strftime("%H:%M:%S"))
     yolo = YOLO(backend             = config['model']['backend'],
                 input_size          = config['model']['input_size'], 
                 labels              = config['model']['labels'], 
                 max_box_per_image   = config['model']['max_box_per_image'],
                 anchors             = config['model']['anchors'])
-
+    print('Finish making model at: ',time.strftime("%H:%M:%S"))
     ###############################
     #   Load trained weights
     ###############################    
-
+    print('Start loading pretrained model at: ', time.strftime("%Y-%m-%d %H:%M:%S"))
     yolo.load_weights(weights_path)
-
+    print('Finish loading pretrained model at: ',time.strftime("%H:%M:%S"))
     ###############################
     #   Predict bounding boxes 
     ###############################
