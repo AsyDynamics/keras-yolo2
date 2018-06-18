@@ -298,7 +298,7 @@ class YOLO(object):
         ############################################
 
         optimizer = Adam(lr=learning_rate, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
-        self.model.compile(loss=self.custom_loss, optimizer=optimizer)
+        self.model.compile(loss=self.custom_loss, optimizer=optimizer,metrics=['accuracy'])
 
         ############################################
         # Make a few callbacks
@@ -339,8 +339,10 @@ class YOLO(object):
         ############################################
         # Compute mAP on the validation set
         ############################################
-        average_precisions = self.evaluate(valid_generator)     
-
+        average_precisions = self.evaluate(valid_generator)
+        print('average_precisions type:',type(average_precisions),'size',size(average_precisions))
+        for key in range (0,size(history.history.keys()):
+            print('the evaluation is ',average_precisions[i])
         # print evaluation
         for label, average_precision in average_precisions.items():
             print(self.labels[label], '{:.4f}'.format(average_precision))
