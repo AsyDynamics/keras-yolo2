@@ -1,0 +1,36 @@
+{
+    "model" : {
+        "backend":              "Tiny Yolo",
+        "input_size":           416,
+        "anchors":              [0.90,1.63, 2.34,4.22, 4.10,8.71, 7.13,5.11, 9.83,10.76],
+        "max_box_per_image":    10,
+        "labels":               ["bird","bottle","chair","person","diningtable","pottedplant","tvmonitor","car","bicycle","dog"]
+    },
+
+    "train": {
+        "train_image_folder":   "/home/asy/deep_learning/custom_data/IMset/",
+        "train_annot_folder":   "/home/asy/deep_learning/custom_data/ANNOTset/",
+
+        "train_times":          8,
+        "pretrained_weights":   "",
+        "batch_size":           16,
+        "learning_rate":        1e-4,
+        "nb_epochs":            1,
+        "warmup_epochs":        3,
+
+        "object_scale":         5.0,
+        "no_object_scale":      1.0,
+        "coord_scale":          1.0,
+        "class_scale":          1.0,
+
+        "saved_weights_name":   "tiny_yolo_voc.h5",
+        "debug":                true
+    },
+
+    "valid": {
+        "valid_image_folder":   "",
+        "valid_annot_folder":   "",
+
+        "valid_times":          1
+    }
+}
