@@ -1,0 +1,36 @@
+{
+    "model" : {
+        "backend":              "Tiny Yolo",
+        "input_size":           416,
+        "anchors":              [1.26,1.91, 3.35,4.11, 6.43,8.55, 7.99,5.34, 11.32,11.20],
+        "max_box_per_image":    6,
+        "labels":               ["bicycle"]
+    },
+
+    "train": {
+        "train_image_folder":   "/home/shuyangan_seu/deep_learning/custom_data/bicycle_image/",
+        "train_annot_folder":   "/home/shuyangan_seu/deep_learning/custom_data/bicycle_annot/",
+
+        "train_times":          8,
+        "pretrained_weights":   "",
+        "batch_size":           32,
+        "learning_rate":        1e-4,
+        "nb_epochs":            20,
+        "warmup_epochs":        2,
+
+        "object_scale":         5.0,
+        "no_object_scale":      1.0,
+        "coord_scale":          1.0,
+        "class_scale":          1.0,
+
+        "saved_weights_name":   "tiny_yolo_voc_bicycle_ep20_2.h5",
+        "debug":                true
+    },
+
+    "valid": {
+        "valid_image_folder":   "",
+        "valid_annot_folder":   "",
+
+        "valid_times":          1
+    }
+}
