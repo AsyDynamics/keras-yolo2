@@ -2,14 +2,14 @@
     "model" : {
         "backend":              "Tiny Yolo",
         "input_size":           416,
-        "anchors":              [0.90,1.63, 2.34,4.22, 4.10,8.71, 7.13,5.11, 9.83,10.76],
+        "anchors":              [0.84,1.60, 2.42,3.41, 2.94,7.23, 5.87,8.16, 10.55,10.31],
         "max_box_per_image":    10,
         "labels":               ["bird","bottle","chair","person","diningtable","pottedplant","tvmonitor","car","bicycle","dog"]
     },
 
     "train": {
-        "train_image_folder":   "/home/asy/deep_learning/custom_data/IMset/",
-        "train_annot_folder":   "/home/asy/deep_learning/custom_data/ANNOTset/",
+        "train_image_folder":   "/home/shuyangan_seu/deep_learning/custom_data/vocIMset/",
+        "train_annot_folder":   "/home/shuyangan_seu/deep_learning/custom_data/vocANNOTset/",
 
         "train_times":          8,
         "pretrained_weights":   "",

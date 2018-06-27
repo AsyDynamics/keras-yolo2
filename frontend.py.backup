@@ -229,13 +229,13 @@ class YOLO(object):
             current_recall = nb_pred_box/(nb_true_box + 1e-6)
             total_recall = tf.assign_add(total_recall, current_recall) 
 
-            loss = tf.Print(loss, [loss_xy], message='Loss XY \t', summarize=1000)
-            loss = tf.Print(loss, [loss_wh], message='Loss WH \t', summarize=1000)
-            loss = tf.Print(loss, [loss_conf], message='Loss Conf \t', summarize=1000)
-            loss = tf.Print(loss, [loss_class], message='Loss Class \t', summarize=1000)
-            loss = tf.Print(loss, [loss], message='Total Loss \t', summarize=1000)
-            loss = tf.Print(loss, [current_recall], message='Current Recall \t', summarize=1000)
-            loss = tf.Print(loss, [total_recall/seen], message='Average Recall \t', summarize=1000)
+#            loss = tf.Print(loss, [loss_xy], message='Loss XY \t', summarize=1000)
+#            loss = tf.Print(loss, [loss_wh], message='Loss WH \t', summarize=1000)
+#            loss = tf.Print(loss, [loss_conf], message='Loss Conf \t', summarize=1000)
+#            loss = tf.Print(loss, [loss_class], message='Loss Class \t', summarize=1000)
+#            loss = tf.Print(loss, [loss], message='Total Loss \t', summarize=1000)
+#            loss = tf.Print(loss, [current_recall], message='Current Recall \t', summarize=1000)
+#            loss = tf.Print(loss, [total_recall/seen], message='Average Recall \t', summarize=1000)
         
         return loss
 
@@ -298,7 +298,7 @@ class YOLO(object):
         ############################################
 
         optimizer = Adam(lr=learning_rate, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
-        self.model.compile(loss=self.custom_loss, optimizer=optimizer)
+        self.model.compile(loss=self.custom_loss, optimizer=optimizer,metrics=['accuracy'])
 
         ############################################
         # Make a few callbacks
@@ -325,7 +325,7 @@ class YOLO(object):
         # Start the training process
         ############################################        
 
-        self.model.fit_generator(generator        = train_generator, 
+        history = self.model.fit_generator(generator        = train_generator, 
                                  steps_per_epoch  = len(train_generator) * train_times, 
                                  epochs           = warmup_epochs + nb_epochs, 
                                  verbose          = 2 if debug else 1,
@@ -335,11 +335,19 @@ class YOLO(object):
                                  workers          = 3,
                                  max_queue_size   = 8)      
 
+        print('History includes ',history.history.keys())
         ############################################
         # Compute mAP on the validation set
         ############################################
-        average_precisions = self.evaluate(valid_generator)     
-
+        average_precisions = self.evaluate(valid_generator)
+        loss = history.history['loss']
+        acc  = history.history['acc']
+        val_loss = history.history['val_loss']
+        val_acc  = history.history['val_acc']
+        print('loss is:',loss)
+        print('acc is:',acc)
+        print('val_loss is',val_loss)
+        print('val_acc is',val_acc)
         # print evaluation
         for label, average_precision in average_precisions.items():
             print(self.labels[label], '{:.4f}'.format(average_precision))
