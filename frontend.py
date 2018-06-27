@@ -306,7 +306,7 @@ class YOLO(object):
 
         early_stop = EarlyStopping(monitor='acc', 
                            min_delta=0.0001, 
-                           patience=3, 
+                           patience=5, 
                            mode='max', 
                            verbose=1)
         checkpoint = ModelCheckpoint(saved_weights_name, 
@@ -344,10 +344,10 @@ class YOLO(object):
         acc  = history.history['acc']
         val_loss = history.history['val_loss']
         val_acc  = history.history['val_acc']
-        print('loss is:',loss)
-        print('acc is:',acc)
-        print('val_loss is',val_loss)
-        print('val_acc is',val_acc)
+        print('loss =',loss)
+        print('acc =',acc)
+        print('val_loss =',val_loss)
+        print('val_acc =',val_acc)
         # print evaluation
         for label, average_precision in average_precisions.items():
             print(self.labels[label], '{:.4f}'.format(average_precision))
